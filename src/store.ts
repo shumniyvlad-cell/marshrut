@@ -8,7 +8,7 @@ export interface Expert { name: string; contact: string }
 type State = {people: Person[]; mode: Mode; expert: Expert};
 
 const KEY = 'marshrut.state';
-const fresh: State = {people: [], mode: 'system', expert: {name: '', contact: ''}};
+const fresh: State = {people: [], mode: 'dark', expert: {name: '', contact: ''}};
 
 function load(): State {
   try {

@@ -47,7 +47,12 @@ export default function App() {
   }, []);
 
   return (
-    <div className="app">
+    <div className={`app is-${route.name}`} style={{['--sky-url' as string]: `url(${import.meta.env.BASE_URL}img/sky.webp)`}}>
+      <div className="sky no-print" aria-hidden>
+        <img src={`${import.meta.env.BASE_URL}img/sky.webp`} alt="" width={1920} height={1111} />
+        <i className="blob blob--a" />
+        <i className="blob blob--b" />
+      </div>
       <header className="bar glass no-print">
         <HStack className="bar__in" justify="between" vAlign="center" gap={2}>
           <a href="#/" className="brand" aria-label="Маршрут, на главную">

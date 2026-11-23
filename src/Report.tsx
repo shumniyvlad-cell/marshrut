@@ -13,6 +13,8 @@ import {useToast} from '@astryxdesign/core/Toast';
 import {ArrowDownTrayIcon, PencilSquareIcon, PhotoIcon, TrashIcon, MagnifyingGlassIcon} from '@heroicons/react/24/outline';
 import type {Person} from './engine';
 import {useReport} from './useReport';
+import {DatesSection} from './dates';
+import {NatalWheel} from './charts';
 import {AstroSection, EastSection, HdSection, KeysSection, MatrixSection, NumbersSection, RouteSection} from './sections';
 import {birthLine} from './format';
 import {fmtOffset} from './engine/time';
@@ -21,6 +23,7 @@ import {go, Loading} from './App';
 
 const TABS = [
   ['route', 'Маршрут'],
+  ['dates', 'Даты'],
   ['astro', 'Астрология'],
   ['hd', 'Дизайн человека'],
   ['matrix', 'Матрица судьбы'],
@@ -50,6 +53,16 @@ export function Report({id, tab, onEdit}: {id: string; tab: string; onEdit: (p: 
   }
   const p = st.person;
 
+  // PDF всегда светлый: на время печати переключаем тему и возвращаем обратно
+  const printLight = () => {
+    const prev = store.get().mode;
+    if (prev === 'light') return print();
+    store.setMode('light');
+    const back = () => { store.setMode(prev); removeEventListener('afterprint', back); };
+    addEventListener('afterprint', back);
+    requestAnimationFrame(() => requestAnimationFrame(() => print()));
+  };
+
   const remove = () => {
     const removed = store.remove(p.id);
     setAsking(false);
@@ -60,15 +73,17 @@ export function Report({id, tab, onEdit}: {id: string; tab: string; onEdit: (p: 
   return (
     <VStack className="col col--wide report" gap={6} paddingBlockEnd={10}>
       <header className="rep-head">
+        {st.kind === 'ready' && <span className="rep-head__wheel" aria-hidden><NatalWheel chart={st.calc.natal} size={620} /></span>}
         <VStack gap={2}>
-          <Heading level={1} type="display-2" textWrap="balance">{p.name}</Heading>
+          <Text className="kicker">Разбор</Text>
+          <h1 className="rep-head__name">{p.name}</h1>
           <Text color="secondary" hasTabularNumbers>
             {birthLine(p)}{st.kind === 'ready' && st.calc.timeKnown ? ` (${fmtOffset(st.calc.offset)})` : ''}
           </Text>
         </VStack>
         <HStack gap={2} wrap="wrap" className="no-print">
           <Button label="Обои" variant="primary" icon={<PhotoIcon />} onClick={() => go(`/r/${p.id}/wall`)} />
-          <Button label="PDF" variant="secondary" icon={<ArrowDownTrayIcon />} isDisabled={st.kind !== 'ready'} onClick={() => print()} tooltip="Откроется печать: выберите «Сохранить как PDF»" />
+          <Button label="PDF" variant="secondary" icon={<ArrowDownTrayIcon />} isDisabled={st.kind !== 'ready'} onClick={printLight} tooltip="Откроется печать: выберите «Сохранить как PDF»" />
           <Button label="Изменить данные" variant="ghost" isIconOnly icon={<PencilSquareIcon />} onClick={() => onEdit(p)} />
           <Button label="Удалить разбор" variant="ghost" isIconOnly icon={<TrashIcon />} onClick={() => setAsking(true)} />
         </HStack>
@@ -96,6 +111,7 @@ export function Report({id, tab, onEdit}: {id: string; tab: string; onEdit: (p: 
               <section key={k} className={`panel${k === active ? '' : ' is-off'}`} aria-label={label}>
                 <Heading level={2} type="display-2" className="print-only panel__title">{label}</Heading>
                 {k === 'route' && <RouteSection {...props} id={p.id} />}
+                {k === 'dates' && <DatesSection calc={st.calc} lib={st.lib} />}
                 {k === 'astro' && <AstroSection {...props} />}
                 {k === 'hd' && <HdSection {...props} />}
                 {k === 'matrix' && <MatrixSection {...props} />}

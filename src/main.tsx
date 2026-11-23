@@ -5,6 +5,8 @@ import '@astryxdesign/core/astryx.css';
 import '@fontsource-variable/ysabeau/wght.css';
 import '@fontsource-variable/ysabeau/wght-italic.css';
 import '@fontsource-variable/ysabeau-office/wght.css';
+import '@fontsource-variable/raleway/wght.css';
+import '@fontsource-variable/alumni-sans/wght.css';
 import './app.css';
 import {Theme} from '@astryxdesign/core/theme';
 import {LayerProvider} from '@astryxdesign/core/Layer';

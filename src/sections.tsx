@@ -17,6 +17,8 @@ import {ANIMAL_RU, BRANCH_HAN, ELEMENTS, ELEMENT_RU, STEM_HAN, pillarRu} from '.
 import {Bodygraph, MatrixChart, NatalWheel, PythagorasGrid} from './charts';
 import {paras, typo} from './format';
 import {go} from './App';
+import {useState} from 'react';
+import {useForecast, WeekStrip, DayCard} from './dates';
 
 type P = {calc: Calc; lib: Library; route: Route};
 
@@ -86,8 +88,32 @@ function Facts({rows}: {rows: [string, ReactNode][]}) {
 }
 
 /* ───── Маршрут ───── */
-export function RouteSection({calc, route, id}: P & {id: string}) {
+function NextDays({calc, f, id}: {calc: Calc; f: ReturnType<typeof useForecast>; id: string}) {
+  const [sel, setSel] = useState(0);
+  const soon = f.events.filter((e) => e.kind !== 'quarter' && e.kind !== 'pmonth').slice(0, 4);
+  return (
+    <Section id="soon" title="Ближайшие дни" lead="Что делать на этой неделе и какие даты впереди. Подробно — во вкладке «Даты».">
+      <WeekStrip f={f} selected={sel} onSelect={setSel} />
+      <DayCard d={f.days[sel]} calc={calc} />
+      <ol className="soon">
+        {soon.map((e, i) => (
+          <li key={i} className={`tone-${e.tone}`}>
+            <span className="soon__d">{e.date.toLocaleDateString('ru-RU', {day: 'numeric', month: 'short'}).replace('.', '')}</span>
+            <Text weight="semibold">{e.title}</Text>
+          </li>
+        ))}
+      </ol>
+      <Button label="Все даты на 3 месяца" variant="secondary" onClick={() => go(`/r/${id}/dates`)} className="no-print" />
+    </Section>
+  );
+}
+
+export function RouteSection({calc, route, id, lib}: P & {id: string}) {
   const spheres = Object.keys(SPHERE_RU) as Sphere[];
+  const f = useForecast(calc, lib);
+  const dmy = (d: Date) => d.toLocaleDateString('ru-RU', {day: 'numeric', month: 'long'});
+  const lunar = calc.hd.type === 'reflector' && f.lastReturn && f.nextReturn;
+  const tomorrow = new Date(Date.now() + 86400000);
   return (
     <VStack gap={10}>
       <section className="pass" aria-label="Главное">
@@ -100,6 +126,8 @@ export function RouteSection({calc, route, id}: P & {id: string}) {
           <HStack gap={6} wrap="wrap" className="pass__meta">
             <VStack gap={0.5}><Text size="sm" className="pass__dim">Когда всё правильно</Text><Text weight="semibold">{route.signature}</Text></VStack>
             <VStack gap={0.5}><Text size="sm" className="pass__dim">Сигнал, что свернули не туда</Text><Text weight="semibold">{route.notself}</Text></VStack>
+            {lunar && <VStack gap={0.5}><Text size="sm" className="pass__dim">Ваш лунный цикл</Text><Text weight="semibold">идёт с {dmy(f.lastReturn!)}, следующий {dmy(f.nextReturn!)}</Text></VStack>}
+            {calc.hd.authority === 'emotional' && <VStack gap={0.5}><Text size="sm" className="pass__dim">Решение, пришедшее сегодня</Text><Text weight="semibold">ответ не раньше {dmy(tomorrow)}</Text></VStack>}
             <VStack gap={0.5}><Text size="sm" className="pass__dim">{route.yearFocus.title}</Text><Text weight="semibold" textWrap="pretty">{typo(route.yearFocus.short)}</Text></VStack>
           </HStack>
         </VStack>
@@ -124,6 +152,8 @@ export function RouteSection({calc, route, id}: P & {id: string}) {
           </ol>
         </VStack>
       </section>
+
+      <NextDays calc={calc} f={f} id={id} />
 
       <Section id="scen" title="Сценарии, которые повторяются" lead="Где человек снова и снова попадает в одну и ту же ситуацию, и как из неё выходить.">
         <ol className="scen">

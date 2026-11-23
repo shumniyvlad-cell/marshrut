@@ -114,3 +114,29 @@ describe('Ба Цзы', () => {
     expect(b.month.stem).toBe(2); // Бин Инь
   });
 });
+
+import {forecast, lunarReturns} from '../forecast';
+import {compute} from '../index';
+import {longitude} from '../astro';
+describe('даты', () => {
+  const p = {id: 'x', name: 'Анна', y: 1990, m: 5, d: 12, h: 8, min: 40, place: {name: 'Вологда', lat: 59.22, lon: 39.88, tz: 'Europe/Moscow'}, createdAt: 0};
+  const c = compute(p, new Date('2026-11-23T12:00:00Z'));
+  const f = forecast(c, {gateTitle: (g) => `в${g}`, channelTitle: (k) => `к${k}`}, new Date('2026-11-23T09:00:00Z'), 92);
+  it('92 дня и события', () => {
+    expect(f.days).toHaveLength(92);
+    expect(f.events.length).toBeGreaterThan(10);
+  });
+  it('лунный цикл ~27,3 дня, Луна точно на натальном месте', () => {
+    const moon = c.natal.placements.find((x) => x.id === 'moon')!.lon;
+    const r = lunarReturns(moon, Date.parse('2026-11-01'), Date.parse('2027-02-01'));
+    expect(r.length).toBe(3);
+    const gap = (r[1].getTime() - r[0].getTime()) / 86400000;
+    expect(gap).toBeGreaterThan(27); expect(gap).toBeLessThan(27.7);
+    expect(Math.abs(((longitude('moon', r[0]) - moon + 540) % 360) - 180)).toBeLessThan(0.01);
+  });
+  it('новолуние 20.11.2026 и 9.12.2026', () => {
+    const nm = f.events.filter((e) => e.kind === 'newmoon').map((e) => e.date.toISOString().slice(0, 10));
+    expect(nm[0]).toBe('2026-12-09');
+    console.log(f.events.map((e) => `${e.date.toISOString().slice(0, 10)} ${e.title}`).join('\n'));
+  });
+});
