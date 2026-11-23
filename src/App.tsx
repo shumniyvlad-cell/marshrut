@@ -47,7 +47,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className={`app is-${route.name}`} style={{['--sky-url' as string]: `url(${import.meta.env.BASE_URL}img/sky.webp)`}}>
+    <div className={`app is-${route.name}`} style={{['--sky-url' as string]: `url(${new URL(`${import.meta.env.BASE_URL}img/sky.webp`, location.href).href})`}}>
       <div className="sky no-print" aria-hidden>
         <img src={`${import.meta.env.BASE_URL}img/sky.webp`} alt="" width={1920} height={1111} />
         <i className="blob blob--a" />
