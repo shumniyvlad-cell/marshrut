@@ -1,0 +1,47 @@
+{
+  "name": "marshrut",
+  "like": "neutral",
+  "mode": "both",
+  "settings": [
+    {
+      "thing": "accent",
+      "value": "#2B31D0",
+      "source": "dial"
+    },
+    {
+      "thing": "--font-family-body",
+      "value": "'Ysabeau Office Variable', system-ui, sans-serif",
+      "source": "token"
+    },
+    {
+      "thing": "font",
+      "value": "'Ysabeau Variable', 'Ysabeau Office Variable', serif",
+      "source": "dial",
+      "on": "heading"
+    },
+    {
+      "thing": "corners",
+      "value": "round",
+      "source": "dial"
+    },
+    {
+      "thing": "neutral",
+      "value": "#686A86",
+      "source": "dial"
+    },
+    {
+      "thing": "--color-background-body",
+      "value": "#F2F3F8",
+      "source": "token",
+      "mode": "light"
+    },
+    {
+      "thing": "--color-background-body",
+      "value": "#090A22",
+      "source": "token",
+      "mode": "dark"
+    }
+  ],
+  "lifted": [],
+  "palette": "cf6552f02dc2f2b0c4662250034cff8721d5021098d1056189063fc2f10b9008"
+}
