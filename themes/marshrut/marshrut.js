@@ -114,24 +114,24 @@ export const marshrutTheme = {
     "--color-syntax-diff-header": "transparent",
     "--color-syntax-added-marker": "var(--color-syntax-punctuation)",
     "--color-syntax-removed-marker": "var(--color-syntax-punctuation)",
-    "--color-background-surface": "light-dark(#ffffff, #232433)",
-    "--color-background-body": "light-dark(#F2F3F8, #090A22)",
-    "--color-background-card": "light-dark(#ffffff, #1a1a26)",
-    "--color-background-popover": "light-dark(#ffffff, #1a1a26)",
-    "--color-background-muted": "light-dark(#eeefff, #1a1a26)",
-    "--color-accent": "light-dark(#2b31d0, #8ba6ff)",
-    "--color-accent-muted": "light-dark(#c4d3ff, #293a98)",
+    "--color-background-surface": "light-dark(#ffffff, #252624)",
+    "--color-background-body": "light-dark(#F4F6F2, #0B0D0B)",
+    "--color-background-card": "light-dark(#ffffff, #1b1c1a)",
+    "--color-background-popover": "light-dark(#ffffff, #1b1c1a)",
+    "--color-background-muted": "light-dark(#f0f1ef, #1b1c1a)",
+    "--color-accent": "light-dark(#3d7b33, #7DBE57)",
+    "--color-accent-muted": "light-dark(#bce1b5, #25531e)",
     "--color-neutral": "light-dark(#0000000F, #ffffff1A)",
     "--color-overlay": "light-dark(#00000080, #000000CC)",
     "--color-overlay-hover": "light-dark(#0000000d, #ffffff0d)",
     "--color-overlay-pressed": "light-dark(#0000001a, #ffffff1a)",
     "--color-text-primary": "light-dark(#000000, #ffffff)",
-    "--color-text-secondary": "light-dark(#44455d, #9a9cb5)",
-    "--color-text-disabled": "light-dark(#8d8fac, #50516a)",
-    "--color-text-accent": "light-dark(#3441df, #b1c4ff)",
+    "--color-text-secondary": "light-dark(#474a46, #9da09c)",
+    "--color-text-disabled": "light-dark(#919490, #545753)",
+    "--color-text-accent": "light-dark(#26611c, #aed3a7)",
     "--color-on-dark": "#ffffff",
     "--color-on-light": "#111111",
-    "--color-on-accent": "light-dark(#ffffff, #0f1019)",
+    "--color-on-accent": "light-dark(#ffffff, #101110)",
     "--color-on-success": "light-dark(#ffffff, #111111)",
     "--color-on-error": "light-dark(#ffffff, #111111)",
     "--color-on-warning": "#111111",
@@ -146,10 +146,10 @@ export const marshrutTheme = {
     "--color-on-success-muted": "light-dark(#00490b, #90ca90)",
     "--color-on-warning-muted": "light-dark(#4b3900, #eec448)",
     "--color-on-error-muted": "light-dark(#76000c, #ffaea7)",
-    "--color-icon-accent": "light-dark(#3441df, #b1c4ff)",
+    "--color-icon-accent": "light-dark(#26611c, #aed3a7)",
     "--color-icon-primary": "light-dark(#000000, #ffffff)",
-    "--color-icon-secondary": "light-dark(#686a86, #9a9cb5)",
-    "--color-icon-disabled": "light-dark(#8d8fac, #50516a)",
+    "--color-icon-secondary": "light-dark(#6e726d, #9da09c)",
+    "--color-icon-disabled": "light-dark(#919490, #545753)",
     "--color-success": "light-dark(#198100, #64af4c)",
     "--color-warning": "#ffce2f",
     "--color-error": "light-dark(#c9303a, #ff705d)",
@@ -157,8 +157,8 @@ export const marshrutTheme = {
     "--color-error-muted": "light-dark(#ffc4be, #ff98903D)",
     "--color-warning-muted": "light-dark(#fae19e, #e2b6233D)",
     "--color-border": "light-dark(#00000014, #ffffff1a)",
-    "--color-border-emphasized": "light-dark(#d0d2ea, #50516a)",
-    "--color-skeleton": "light-dark(#eeefff, #50516a)",
+    "--color-border-emphasized": "light-dark(#d3d5d2, #545753)",
+    "--color-skeleton": "light-dark(#f0f1ef, #545753)",
     "--color-shadow": "light-dark(#0000001A, #0000004D)",
     "--color-tint-hover": "light-dark(#000000, #ffffff)",
     "--color-background-red": "light-dark(#ffc4be, #5b2b28)",
@@ -214,8 +214,7 @@ export const marshrutTheme = {
     "--shadow-inset-selected": "inset 0px 0px 0px 2px #0074e280",
     "--shadow-inset-success": "inset 0px 0px 0px 2px #2f7d334D",
     "--shadow-inset-warning": "inset 0px 0px 0px 2px #f8d36a4D",
-    "--shadow-inset-error": "inset 0px 0px 0px 2px #de47454D",
-    "--focus-outline-color": "light-dark(#2b31d0, #8ba6ff)"
+    "--shadow-inset-error": "inset 0px 0px 0px 2px #de47454D"
   },
   localTokens: {
     "--astryx-theme-neutral-color-status-fill-accent": "light-dark(#0074e2, #6d9cfe)"
@@ -322,22 +321,22 @@ export const marshrutTheme = {
     },
     "item": {
       "selected": {
-        "--color-text-secondary": "light-dark(#44455d, #c3c5da)"
+        "--color-text-secondary": "light-dark(#474a46, #c5c7c5)"
       }
     },
     "tree-list-item": {
       "selected": {
-        "--color-text-secondary": "light-dark(#44455d, #c3c5da)"
+        "--color-text-secondary": "light-dark(#474a46, #c5c7c5)"
       }
     },
     "file-input": {
       "mode:dropzone": {
-        "--color-text-secondary": "light-dark(#44455d, #c3c5da)"
+        "--color-text-secondary": "light-dark(#474a46, #c5c7c5)"
       }
     },
     "citation": {
       "variant:number": {
-        "--color-text-secondary": "light-dark(#44455d, #c3c5da)"
+        "--color-text-secondary": "light-dark(#474a46, #c5c7c5)"
       }
     },
     "button": {
@@ -399,7 +398,7 @@ export const marshrutTheme = {
     },
     "segmented-control-item": {
       "base": {
-        "--color-text-secondary": "light-dark(#44455d, #c3c5da)"
+        "--color-text-secondary": "light-dark(#474a46, #c5c7c5)"
       },
       "size:sm": {
         "height": "calc(var(--size-element-sm) - 8px)"

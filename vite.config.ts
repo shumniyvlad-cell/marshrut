@@ -35,6 +35,7 @@ export default defineConfig({
       '@astryxdesign/core/Switch',
       '@astryxdesign/core/TabList',
       '@astryxdesign/core/Text',
+      '@astryxdesign/core/TextArea',
       '@astryxdesign/core/TextInput',
       '@astryxdesign/core/Thumbnail',
       '@astryxdesign/core/Toast',

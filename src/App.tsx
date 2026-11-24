@@ -47,12 +47,14 @@ export default function App() {
   }, []);
 
   return (
-    <div className={`app is-${route.name}`} style={{['--sky-url' as string]: `url(${new URL(`${import.meta.env.BASE_URL}img/sky.webp`, location.href).href})`}}>
+    <div className={`app is-${route.name}`} style={{['--pass-url' as string]: `url(${new URL(`${import.meta.env.BASE_URL}photo/dream.webp`, location.href).href})`}}>
       <div className="sky no-print" aria-hidden>
-        <img src={`${import.meta.env.BASE_URL}img/sky.webp`} alt="" width={1920} height={1111} />
+        <img src={`${import.meta.env.BASE_URL}photo/calm.webp`} alt="" width={1200} height={1800} />
         <i className="blob blob--a" />
         <i className="blob blob--b" />
       </div>
+      {/* водяной знак-роща: в светлой теме справа, на печати на каждой странице */}
+      <img className="grove" src={`${import.meta.env.BASE_URL}photo/grove-mark.png`} alt="" aria-hidden width={525} height={742} />
       <header className="bar glass no-print">
         <HStack className="bar__in" justify="between" vAlign="center" gap={2}>
           <a href="#/" className="brand" aria-label="Маршрут, на главную">

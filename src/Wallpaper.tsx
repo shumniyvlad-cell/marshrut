@@ -15,6 +15,7 @@ import {useReport} from './useReport';
 import {useStore} from './store';
 import {drawWall, ensureFonts, FORMATS, type WallFormat, type WallTheme} from './wall';
 import {go, Loading} from './App';
+import {TgHint} from './TgHint';
 
 export function Wallpaper({id}: {id: string}) {
   const st = useReport(id);
@@ -75,6 +76,7 @@ export function Wallpaper({id}: {id: string}) {
         </VStack>
         <Button label="Скачать PNG" variant="primary" size="lg" icon={<ArrowDownTrayIcon />} onClick={download} isLoading={isSaving} isDisabled={st.kind !== 'ready'} />
       </HStack>
+      <TgHint person={st.person} what="обои" />
 
       {st.kind === 'loading' && <Loading />}
       {st.kind === 'error' && (
@@ -92,8 +94,8 @@ export function Wallpaper({id}: {id: string}) {
             </SegmentedControl>
             <SegmentedControl label="Оформление" value={theme} onChange={(v) => setTheme(v as WallTheme)} layout="fill">
               <SegmentedControlItem value="night" label="Ночь" />
-              <SegmentedControlItem value="pearl" label="Жемчуг" />
-              <SegmentedControlItem value="ultra" label="Ультрамарин" />
+              <SegmentedControlItem value="pearl" label="Светлые" />
+              <SegmentedControlItem value="bamboo" label="Бамбук" />
             </SegmentedControl>
             <SegmentedControl label="Пунктов в каждом списке" value={String(count)} onChange={(v) => setCount(Number(v))} layout="fill">
               <SegmentedControlItem value="3" label="3" />

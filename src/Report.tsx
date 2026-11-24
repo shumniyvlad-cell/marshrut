@@ -1,4 +1,4 @@
-// Разбор человека: шапка, вкладки по системам, печать в PDF.
+// Разбор человека: полный для эксперта (вкладки по системам) или краткий для клиента; печать в PDF.
 import {useState} from 'react';
 import {VStack} from '@astryxdesign/core/VStack';
 import {HStack} from '@astryxdesign/core/HStack';
@@ -8,6 +8,7 @@ import {Button} from '@astryxdesign/core/Button';
 import {Banner} from '@astryxdesign/core/Banner';
 import {EmptyState} from '@astryxdesign/core/EmptyState';
 import {TabList, Tab} from '@astryxdesign/core/TabList';
+import {SegmentedControl, SegmentedControlItem} from '@astryxdesign/core/SegmentedControl';
 import {AlertDialog} from '@astryxdesign/core/AlertDialog';
 import {useToast} from '@astryxdesign/core/Toast';
 import {ArrowDownTrayIcon, PencilSquareIcon, PhotoIcon, TrashIcon, MagnifyingGlassIcon} from '@heroicons/react/24/outline';
@@ -16,6 +17,8 @@ import {useReport} from './useReport';
 import {DatesSection} from './dates';
 import {NatalWheel} from './charts';
 import {AstroSection, EastSection, HdSection, KeysSection, MatrixSection, NumbersSection, RouteSection} from './sections';
+import {BriefSection} from './Brief';
+import {TgHint} from './TgHint';
 import {birthLine} from './format';
 import {fmtOffset} from './engine/time';
 import {store, useStore} from './store';
@@ -37,6 +40,7 @@ export function Report({id, tab, onEdit}: {id: string; tab: string; onEdit: (p: 
   const {expert} = useStore();
   const [asking, setAsking] = useState(false);
   const toast = useToast();
+  const isBrief = tab === 'brief';
   const active = TABS.some(([k]) => k === tab) ? tab : 'route';
 
   if (st.kind === 'missing') {
@@ -71,11 +75,11 @@ export function Report({id, tab, onEdit}: {id: string; tab: string; onEdit: (p: 
   };
 
   return (
-    <VStack className="col col--wide report" gap={6} paddingBlockEnd={10}>
+    <VStack className={`col col--wide report${isBrief ? ' is-brief' : ''}`} gap={6} paddingBlockEnd={10}>
       <header className="rep-head">
-        {st.kind === 'ready' && <span className="rep-head__wheel" aria-hidden><NatalWheel chart={st.calc.natal} size={620} /></span>}
+        {st.kind === 'ready' && !isBrief && <span className="rep-head__wheel" aria-hidden><NatalWheel chart={st.calc.natal} size={620} /></span>}
         <VStack gap={2}>
-          <Text className="kicker">Разбор</Text>
+          <Text className="kicker">{isBrief ? 'Цифровой портрет и маршрутный лист' : 'Разбор'}</Text>
           <h1 className="rep-head__name">{p.name}</h1>
           <Text color="secondary" hasTabularNumbers>
             {birthLine(p)}{st.kind === 'ready' && st.calc.timeKnown ? ` (${fmtOffset(st.calc.offset)})` : ''}
@@ -83,17 +87,27 @@ export function Report({id, tab, onEdit}: {id: string; tab: string; onEdit: (p: 
         </VStack>
         <HStack gap={2} wrap="wrap" className="no-print">
           <Button label="Обои" variant="primary" icon={<PhotoIcon />} onClick={() => go(`/r/${p.id}/wall`)} />
-          <Button label="PDF" variant="secondary" icon={<ArrowDownTrayIcon />} isDisabled={st.kind !== 'ready'} onClick={printLight} tooltip="Откроется печать: выберите «Сохранить как PDF»" />
+          <Button label={isBrief ? 'PDF для клиента' : 'PDF'} variant="secondary" icon={<ArrowDownTrayIcon />} isDisabled={st.kind !== 'ready'} onClick={printLight} tooltip="Откроется печать: выберите «Сохранить как PDF»" />
           <Button label="Изменить данные" variant="ghost" isIconOnly icon={<PencilSquareIcon />} onClick={() => onEdit(p)} />
           <Button label="Удалить разбор" variant="ghost" isIconOnly icon={<TrashIcon />} onClick={() => setAsking(true)} />
         </HStack>
       </header>
+      <TgHint person={p} />
 
-      <nav className="tabs no-print" aria-label="Разделы разбора">
-        <TabList value={active} onChange={(v) => go(v === 'route' ? `/r/${p.id}` : `/r/${p.id}/${v}`)} hasDivider>
-          {TABS.map(([k, l]) => <Tab key={k} value={k} label={l} />)}
-        </TabList>
-      </nav>
+      <VStack className="mode no-print">
+        <SegmentedControl label="Вид разбора" value={isBrief ? 'brief' : 'full'} onChange={(v) => go(v === 'brief' ? `/r/${p.id}/brief` : `/r/${p.id}`)} layout="fill">
+          <SegmentedControlItem value="full" label="Полный, для эксперта" />
+          <SegmentedControlItem value="brief" label="Кратко, для клиента" />
+        </SegmentedControl>
+      </VStack>
+
+      {!isBrief && (
+        <nav className="tabs no-print" aria-label="Разделы разбора">
+          <TabList value={active} onChange={(v) => go(v === 'route' ? `/r/${p.id}` : `/r/${p.id}/${v}`)} hasDivider>
+            {TABS.map(([k, l]) => <Tab key={k} value={k} label={l} />)}
+          </TabList>
+        </nav>
+      )}
 
       {st.kind === 'loading' && <Loading />}
       {st.kind === 'error' && (
@@ -103,7 +117,18 @@ export function Report({id, tab, onEdit}: {id: string; tab: string; onEdit: (p: 
           endContent={<Button label="Повторить" variant="secondary" size="sm" onClick={st.retry} />}
         />
       )}
-      {st.kind === 'ready' && (
+      {st.kind === 'ready' && isBrief && (
+        <>
+          <BriefSection person={p} calc={st.calc} route={st.route} />
+          <footer className="rep-foot">
+            <Text size="sm" color="secondary">
+              {expert.name ? `Разбор: ${expert.name}${expert.contact ? `, ${expert.contact}` : ''}. ` : ''}
+              Разбор помогает увидеть свои сильные стороны и слепые зоны и не заменяет врача или психотерапевта.
+            </Text>
+          </footer>
+        </>
+      )}
+      {st.kind === 'ready' && !isBrief && (
         <>
           {TABS.map(([k, label]) => {
             const props = {calc: st.calc, lib: st.lib, route: st.route};

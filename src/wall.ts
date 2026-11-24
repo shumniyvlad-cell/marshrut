@@ -4,16 +4,17 @@ import type {NatalChart} from './engine/astro';
 import {typo} from './format';
 
 export type WallFormat = 'desktop' | 'laptop' | 'phone';
-export type WallTheme = 'night' | 'pearl' | 'ultra';
+export type WallTheme = 'night' | 'pearl' | 'bamboo';
 export const FORMATS: Record<WallFormat, {w: number; h: number; label: string}> = {
   desktop: {w: 2560, h: 1440, label: 'Монитор'},
   laptop: {w: 2880, h: 1800, label: 'Ноутбук'},
   phone: {w: 1179, h: 2556, label: 'Телефон'},
 };
+// палитра «Перепрошивки»: чёрный, белый, бамбуковый зелёный; «не делать» — приглушённая терракота
 const THEMES: Record<WallTheme, {bg: string; ink: string; dim: string; acc: string; neg: string; line: string; star: string}> = {
-  night: {bg: '#090A22', ink: '#F2F3F8', dim: 'rgba(242,243,248,.62)', acc: '#9FA3FF', neg: '#F4B3AC', line: 'rgba(242,243,248,.10)', star: 'rgba(242,243,248,.55)'},
-  pearl: {bg: '#F2F3F8', ink: '#14163A', dim: 'rgba(20,22,58,.62)', acc: '#2B31D0', neg: '#B4323E', line: 'rgba(20,22,58,.10)', star: 'rgba(43,49,208,.35)'},
-  ultra: {bg: '#2B31D0', ink: '#FFFFFF', dim: 'rgba(255,255,255,.72)', acc: '#FFFFFF', neg: '#FFD3CE', line: 'rgba(255,255,255,.16)', star: 'rgba(255,255,255,.6)'},
+  night: {bg: '#0B0D0B', ink: '#F2F5EF', dim: 'rgba(242,245,239,.64)', acc: '#7DBE57', neg: '#E39A84', line: 'rgba(205,235,180,.12)', star: 'rgba(205,235,180,.55)'},
+  pearl: {bg: '#F4F6F2', ink: '#0B0D0B', dim: 'rgba(11,13,11,.64)', acc: '#3D7B33', neg: '#A9472F', line: 'rgba(11,13,11,.10)', star: 'rgba(61,123,51,.35)'},
+  bamboo: {bg: '#2F6A2A', ink: '#FFFFFF', dim: 'rgba(255,255,255,.76)', acc: '#CDEBB4', neg: '#F6C9BC', line: 'rgba(255,255,255,.16)', star: 'rgba(205,235,180,.6)'},
 };
 
 export interface WallOptions {

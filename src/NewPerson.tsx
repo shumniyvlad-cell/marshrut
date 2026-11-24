@@ -6,6 +6,7 @@ import {HStack} from '@astryxdesign/core/HStack';
 import {Heading} from '@astryxdesign/core/Heading';
 import {Text} from '@astryxdesign/core/Text';
 import {TextInput} from '@astryxdesign/core/TextInput';
+import {TextArea} from '@astryxdesign/core/TextArea';
 import {Switch} from '@astryxdesign/core/Switch';
 import {Button} from '@astryxdesign/core/Button';
 import {MapPinIcon} from '@heroicons/react/24/outline';
@@ -35,6 +36,8 @@ export function NewPerson({isOpen, person, onClose, onSaved}: {
   const [noTime, setNoTime] = useState(false);
   const [placeQ, setPlaceQ] = useState('');
   const [place, setPlace] = useState<Place | null>(null);
+  const [from, setFrom] = useState('');
+  const [to, setTo] = useState('');
   const [search, setSearch] = useState<Search>({kind: 'idle'});
   const [retry, setRetry] = useState(0);
   const [touched, setTouched] = useState(false);
@@ -50,6 +53,8 @@ export function NewPerson({isOpen, person, onClose, onSaved}: {
     setNoTime(person ? person.h === null : false);
     setPlace(person?.place ?? null);
     setPlaceQ(person?.place?.name ?? '');
+    setFrom(person?.from ?? '');
+    setTo(person?.to ?? '');
     setSearch({kind: 'idle'});
   }, [isOpen, person]);
 
@@ -91,6 +96,8 @@ export function NewPerson({isOpen, person, onClose, onSaved}: {
       y: yy, m: mm, d: dd,
       h: noTime ? null : th, min: noTime ? null : tm,
       place,
+      ...(from.trim() ? {from: from.trim()} : {}),
+      ...(to.trim() ? {to: to.trim()} : {}),
       createdAt: person?.createdAt ?? Date.now(),
     };
     store.save(p);
@@ -107,7 +114,7 @@ export function NewPerson({isOpen, person, onClose, onSaved}: {
             <Heading level={2}>{person ? 'Изменить данные' : 'Новый разбор'}</Heading>
             <Text color="secondary" textWrap="pretty">Точное время и место дают дома, асцендент и точный бодиграф. Без времени разбор тоже соберётся, но короче.</Text>
           </VStack>
-          <TextInput htmlName="name" label="Имя и фамилия" value={name} onChange={setName} placeholder="Анна Соколова" {...err('name')} />
+          <TextInput htmlName="name" label="Имя и фамилия" value={name} onChange={setName} placeholder="Анна Соколова" description="Полное имя, а не сокращённое: Владислав, а не Влад" {...err('name')} />
           <HStack gap={3} vAlign="start" wrap="wrap">
             <VStack className="grow">
               <TextInput htmlName="date" label="Дата рождения" value={date} onChange={(v) => setDate(maskDate(v))} placeholder="12.05.1990" inputMode="numeric" {...err('date')} />
@@ -145,6 +152,14 @@ export function NewPerson({isOpen, person, onClose, onSaved}: {
                 ))}
               </ul>
             )}
+          </VStack>
+          <VStack gap={3}>
+            <VStack gap={0.5}>
+              <Text weight="semibold">Запрос клиента</Text>
+              <Text size="sm" color="secondary" textWrap="pretty">Необязательно. Попадёт в краткий разбор как точка А и точка Б.</Text>
+            </VStack>
+            <TextArea htmlName="from" label="Где сейчас" isOptional value={from} onChange={setFrom} rows={2} placeholder="Например: выгорела в найме, доход упёрся в потолок" />
+            <TextArea htmlName="to" label="Куда хочет" isOptional value={to} onChange={setTo} rows={2} placeholder="Например: своё дело и спокойный рост дохода" />
           </VStack>
           <Button label={person ? 'Пересчитать разбор' : 'Собрать разбор'} variant="primary" size="lg" type="submit" width="100%" />
         </VStack>

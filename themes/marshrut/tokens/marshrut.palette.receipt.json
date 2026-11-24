@@ -3,7 +3,7 @@
   "recipe": "astryx-oklch-v1",
   "generatorVersion": "palette-generator-v1",
   "candidateFormatVersion": "palette-typescript-v1",
-  "candidateSha256": "0f1ac4836e813d2f16769904d0dc0595af23166e29dd143da0612394b93f0af6",
+  "candidateSha256": "37ea211191845f277870ea1ef90b4072f4519be2820dbaa76d7996d382c1f9ac",
   "request": {
     "recipe": "astryx-oklch-v1",
     "vibrancy": 50,
@@ -36,13 +36,13 @@
       {
         "id": "accent",
         "name": "Accent",
-        "seed": "#2b31d0",
+        "seed": "#3d7b33",
         "kind": "chromatic",
         "anchors": [
           {
             "mode": "light",
-            "stop": 35,
-            "color": "#2b31d0",
+            "stop": 45,
+            "color": "#3d7b33",
             "policy": "exact"
           }
         ]
@@ -50,19 +50,19 @@
       {
         "id": "neutral",
         "name": "Neutral",
-        "seed": "#686a86",
+        "seed": "#6e726d",
         "kind": "neutral",
         "anchors": [
           {
             "mode": "light",
             "stop": 45,
-            "color": "#686a86",
+            "color": "#6e726d",
             "policy": "exact"
           },
           {
             "mode": "dark",
             "stop": 45,
-            "color": "#686a86",
+            "color": "#6e726d",
             "policy": "exact"
           }
         ]
@@ -74,46 +74,31 @@
       "accent": {
         "light": {
           "monotonic": true,
-          "minimumAdjacentDeltaE": 4.242747730769393,
-          "maximumAdjacentDeltaE": 20.39068331017931,
-          "maximumHueDrift": 1.1489255413769115,
+          "minimumAdjacentDeltaE": 4.106356641472197,
+          "maximumAdjacentDeltaE": 18.727975294038828,
+          "maximumHueDrift": 1.733043314216161,
           "hueIdentityRisk": null,
           "gamutMappedStops": [
-            60,
-            65,
-            70,
-            75,
-            80,
-            85,
-            90,
-            95,
             100
           ],
           "anchors": [
             {
               "mode": "light",
-              "stop": 35,
-              "color": "#2b31d0",
+              "stop": 45,
+              "color": "#3d7b33",
               "policy": "exact",
-              "generatedColor": "#2b31d0",
+              "generatedColor": "#3d7b33",
               "deltaE": 0
             }
           ]
         },
         "dark": {
           "monotonic": true,
-          "minimumAdjacentDeltaE": 4.206910426743213,
-          "maximumAdjacentDeltaE": 19.55746138676147,
-          "maximumHueDrift": 1.0269562262743648,
+          "minimumAdjacentDeltaE": 4.079960265971011,
+          "maximumAdjacentDeltaE": 18.41537065187346,
+          "maximumHueDrift": 0.9347157367687942,
           "hueIdentityRisk": null,
           "gamutMappedStops": [
-            65,
-            70,
-            75,
-            80,
-            85,
-            90,
-            95,
             100
           ],
           "anchors": []
@@ -122,31 +107,30 @@
       "neutral": {
         "light": {
           "monotonic": true,
-          "minimumAdjacentDeltaE": 3.925242192740688,
-          "maximumAdjacentDeltaE": 17.836120532217418,
-          "maximumHueDrift": 170.24137237771367,
-          "hueIdentityRisk": "yellow-to-brown",
+          "minimumAdjacentDeltaE": 3.7694145539602304,
+          "maximumAdjacentDeltaE": 17.608409116228685,
+          "maximumHueDrift": 0,
+          "hueIdentityRisk": null,
           "gamutMappedStops": [
-            95,
             100
           ],
           "anchors": [
             {
               "mode": "light",
               "stop": 45,
-              "color": "#686a86",
+              "color": "#6e726d",
               "policy": "exact",
-              "generatedColor": "#686a86",
+              "generatedColor": "#6e726d",
               "deltaE": 0
             }
           ]
         },
         "dark": {
           "monotonic": true,
-          "minimumAdjacentDeltaE": 4.093149533335624,
-          "maximumAdjacentDeltaE": 17.753276641426137,
-          "maximumHueDrift": 171.72391086084303,
-          "hueIdentityRisk": "yellow-to-brown",
+          "minimumAdjacentDeltaE": 3.7138596126817456,
+          "maximumAdjacentDeltaE": 17.608409116228685,
+          "maximumHueDrift": 0,
+          "hueIdentityRisk": null,
           "gamutMappedStops": [
             100
           ],
@@ -154,9 +138,9 @@
             {
               "mode": "dark",
               "stop": 45,
-              "color": "#686a86",
+              "color": "#6e726d",
               "policy": "exact",
-              "generatedColor": "#686a86",
+              "generatedColor": "#6e726d",
               "deltaE": 0
             }
           ]

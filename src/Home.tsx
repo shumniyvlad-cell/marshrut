@@ -1,4 +1,4 @@
-// Главная: настоящее небо Уэбба, живая карта неба сейчас, клиенты, сюжет «семь систем → один маршрут», даты и обои.
+// Главная: бамбуковая роща, живая карта неба сейчас, клиенты, сюжет «семь систем → один маршрут», даты и обои.
 import {useEffect, useMemo, useRef, useState, type ReactNode} from 'react';
 import {VStack} from '@astryxdesign/core/VStack';
 import {HStack} from '@astryxdesign/core/HStack';
@@ -89,8 +89,8 @@ export function Home({onNew}: {onNew: () => void}) {
     <>
       <section className="hero dark-zone">
         <picture>
-          <source media="(max-width: 700px)" srcSet={`${BASE}img/sky-m.webp`} />
-          <img className="hero__bg" src={`${BASE}img/sky.webp`} alt="" width={1920} height={1111} fetchPriority="high" />
+          <source media="(max-width: 700px)" srcSet={`${BASE}photo/today.webp`} />
+          <img className="hero__bg" src={`${BASE}photo/calm.webp`} alt="" width={1200} height={1800} fetchPriority="high" />
         </picture>
         <div className="hero__in">
           <VStack gap={6} className="hero__text">
@@ -120,7 +120,7 @@ export function Home({onNew}: {onNew: () => void}) {
             </figcaption>
           </figure>
         </div>
-        <Text size="sm" className="hero__credit">Небо сейчас считается в браузере. Фото: телескоп «Джеймс Уэбб», NASA, ESA, CSA, STScI</Text>
+        <Text size="sm" className="hero__credit">Небо сейчас считается в браузере.</Text>
       </section>
 
       {people.length > 0 && (
@@ -157,7 +157,7 @@ export function Home({onNew}: {onNew: () => void}) {
       <Walls />
 
       <section className="final dark-zone">
-        <img className="final__bg" src={`${BASE}img/sky.webp`} alt="" loading="lazy" width={1920} height={1111} />
+        <img className="final__bg" src={`${BASE}photo/morning.webp`} alt="" loading="lazy" width={900} height={1348} />
         <VStack gap={5} hAlign="center" className="final__in">
           <h2 className="final__h">Первый разбор за&nbsp;минуту</h2>
           <Text type="large" justify="center" textWrap="balance" className="final__p">Дата, время, город. Всё остальное посчитается само, прямо в&nbsp;браузере.</Text>
@@ -176,7 +176,7 @@ const STEPS = [
   ['04', 'Квадрат Пифагора', 'Психоматрица с рабочими числами, все ячейки и линии с трактовкой.'],
   ['05', 'Нумерология', 'Число пути, личный год, числа выражения, души и личности по полному имени.'],
   ['06', 'Ба Цзы', 'Четыре столпа по солнечному календарю, хозяин дня и баланс пяти стихий.'],
-  ['07', 'Маршрут', 'Всё сходится в одно: 7 «делать», 7 «не делать», сценарии с выходом, план на 90 дней и даты.'],
+  ['07', 'Маршрут', 'Всё сходится в одно: 7 «делать», 7 «не делать», сценарии с выходом, план на 90 дней и даты. Для клиента — краткая версия без терминов.'],
 ] as const;
 
 function Story({sample}: {sample: ReturnType<typeof compute>}) {
@@ -256,7 +256,7 @@ function Walls() {
     const route = buildRoute(calc, lib);
     ensureFonts().then(() => {
       if (desk.current) drawWall(desk.current, route, calc.natal, SAMPLE.name, 19900512, {format: 'desktop', theme: 'night', count: 7, scenario: true, signature: ''});
-      if (phone.current) drawWall(phone.current, route, calc.natal, SAMPLE.name, 19900512, {format: 'phone', theme: 'ultra', count: 5, scenario: true, signature: ''});
+      if (phone.current) drawWall(phone.current, route, calc.natal, SAMPLE.name, 19900512, {format: 'phone', theme: 'bamboo', count: 5, scenario: true, signature: ''});
     });
   }, [lib]);
   return (

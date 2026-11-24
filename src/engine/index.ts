@@ -13,6 +13,8 @@ export interface Person {
   h: number | null; min: number | null; // null — время неизвестно
   place: Place | null;
   note?: string;
+  from?: string; // точка А: где человек сейчас (для краткого разбора)
+  to?: string;   // точка Б: куда хочет
   createdAt: number;
 }
 

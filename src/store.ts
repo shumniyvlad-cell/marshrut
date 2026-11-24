@@ -18,6 +18,32 @@ function load(): State {
   }
 }
 let state = load();
+
+/* Ссылка с данными человека: разборы живут в браузере, и без неё ссылка из Telegram в Safari открыла бы пустоту. */
+const b64 = (s: string) => btoa(String.fromCharCode(...new TextEncoder().encode(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+const unb64 = (s: string) => new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g, '+').replace(/_/g, '/')), (c) => c.charCodeAt(0)));
+export function shareUrl(p: Person) {
+  const {createdAt: _skip, ...rest} = p;
+  void _skip;
+  const u = new URL(location.href);
+  u.searchParams.set('p', b64(JSON.stringify(rest)));
+  return u.href;
+}
+function importFromUrl() {
+  try {
+    const u = new URL(location.href);
+    const raw = u.searchParams.get('p');
+    if (!raw) return;
+    const p = JSON.parse(unb64(raw)) as Person;
+    if (p && typeof p.id === 'string' && typeof p.name === 'string' && p.y && p.m && p.d && !state.people.some((x) => x.id === p.id)) {
+      state = {...state, people: [{...p, createdAt: Date.now()}, ...state.people]};
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* приватный режим */ }
+    }
+    u.searchParams.delete('p');
+    history.replaceState(null, '', u.href);
+  } catch { /* битая ссылка: просто открываем как есть */ }
+}
+if (typeof location !== 'undefined') importFromUrl();
 const subs = new Set<() => void>();
 
 function set(next: Partial<State>) {

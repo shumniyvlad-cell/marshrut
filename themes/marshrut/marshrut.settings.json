@@ -4,11 +4,6 @@
   "mode": "both",
   "settings": [
     {
-      "thing": "accent",
-      "value": "#2B31D0",
-      "source": "dial"
-    },
-    {
       "thing": "--font-family-body",
       "value": "'Ysabeau Office Variable', system-ui, sans-serif",
       "source": "token"
@@ -25,23 +20,34 @@
       "source": "dial"
     },
     {
-      "thing": "neutral",
-      "value": "#686A86",
+      "thing": "accent",
+      "value": "#3D7B33",
       "source": "dial"
     },
     {
+      "thing": "neutral",
+      "value": "#6E726D",
+      "source": "dial"
+    },
+    {
+      "thing": "--color-accent",
+      "value": "#7DBE57",
+      "source": "token",
+      "mode": "dark"
+    },
+    {
       "thing": "--color-background-body",
-      "value": "#F2F3F8",
+      "value": "#F4F6F2",
       "source": "token",
       "mode": "light"
     },
     {
       "thing": "--color-background-body",
-      "value": "#090A22",
+      "value": "#0B0D0B",
       "source": "token",
       "mode": "dark"
     }
   ],
   "lifted": [],
-  "palette": "cf6552f02dc2f2b0c4662250034cff8721d5021098d1056189063fc2f10b9008"
+  "palette": "e13b0ee9403cc856117b24fde317adeb95377dcca4af1e4063bb0bfc9b95c50a"
 }
